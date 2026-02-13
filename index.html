@@ -404,9 +404,8 @@
 
         <p>
           We started our journey together a bit unconventionally, but I'm glad
-          it's you I get to take it with. Thanks for taking this
-          chance with me and I'm really looking forward to what the future holds
-          for us!
+          it's you I get to take it with. Thanks for taking this chance with me
+          and I'm really looking forward to what the future holds for us!
         </p>
       </div>
 
@@ -493,8 +492,14 @@
       // Keep creating new hearts
       setInterval(createFloatingHeart, 2000);
 
-      // Celebration function
+      // Celebration function with cooldown
+      let isCelebrating = false;
+
       function celebrate() {
+        // Prevent multiple simultaneous celebrations
+        if (isCelebrating) return;
+        isCelebrating = true;
+
         const celebration = document.getElementById("celebration");
 
         // Create burst of emoji
@@ -522,25 +527,38 @@
             let currentVx = vx;
             let currentVy = vy;
             let opacity = 1;
+            let startTime = performance.now();
 
-            const animation = setInterval(() => {
-              posX += currentVx * 0.016;
-              posY += currentVy * 0.016;
-              currentVy += 500 * 0.016; // Gravity
-              opacity -= 0.01;
+            function animate(currentTime) {
+              const deltaTime = (currentTime - startTime) / 1000; // Convert to seconds
+
+              posX = window.innerWidth / 2 + vx * deltaTime;
+              posY =
+                window.innerHeight / 2 +
+                vy * deltaTime +
+                0.5 * 500 * deltaTime * deltaTime; // Gravity
+              opacity = Math.max(0, 1 - deltaTime / 3); // Fade out over 3 seconds
 
               emoji.style.left = posX + "px";
               emoji.style.top = posY + "px";
               emoji.style.opacity = opacity;
               emoji.style.transform = "none";
 
-              if (opacity <= 0 || posY > window.innerHeight) {
-                clearInterval(animation);
+              if (opacity > 0 && posY < window.innerHeight) {
+                requestAnimationFrame(animate);
+              } else {
                 emoji.remove();
               }
-            }, 16);
+            }
+
+            requestAnimationFrame(animate);
           }, i * 20);
         }
+
+        // Reset cooldown after 2 seconds
+        setTimeout(() => {
+          isCelebrating = false;
+        }, 2000);
       }
     </script>
   </body>
