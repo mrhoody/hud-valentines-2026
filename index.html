@@ -34,6 +34,107 @@
         animation: fadeIn 1s ease-in;
       }
 
+      .password-screen {
+        max-width: 400px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        animation: fadeIn 1s ease-in;
+      }
+
+      .password-screen h2 {
+        font-size: 2em;
+        color: #e63946;
+        margin-bottom: 20px;
+      }
+
+      .password-screen p {
+        font-size: 1.1em;
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+      }
+
+      .password-input {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 1.1em;
+        border: 2px solid #f7a8e1;
+        border-radius: 50px;
+        outline: none;
+        font-family: "Georgia", serif;
+        text-align: center;
+        transition: all 0.3s ease;
+        margin-bottom: 20px;
+      }
+
+      .password-input:focus {
+        border-color: #e63946;
+        box-shadow: 0 0 10px rgba(230, 57, 70, 0.3);
+      }
+
+      .password-input::placeholder {
+        color: #ccc;
+      }
+
+      .unlock-button {
+        background: linear-gradient(135deg, #e63946 0%, #d62828 100%);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.1em;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+        font-family: "Georgia", serif;
+        width: 100%;
+      }
+
+      .unlock-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.6);
+      }
+
+      .unlock-button:active {
+        transform: translateY(-1px);
+      }
+
+      .error-message {
+        color: #e63946;
+        font-size: 0.9em;
+        margin-top: 10px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .error-message.show {
+        opacity: 1;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .fade-out {
+        animation: fadeOut 0.5s ease-out forwards;
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+          transform: scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+      }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -190,12 +291,53 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <!-- Password Screen -->
+    <div class="password-screen" id="passwordScreen">
+      <h2>A Secret Message Awaits</h2>
+      <p>
+        This page holds a special Valentine's Day message just for Duyen but
+        there's a special password needed to unlock it!
+      </p>
+      <p style="font-size: 0.95em; color: #999; font-style: italic">
+        Hint: It's her favorite term of endearment 😊
+      </p>
+      <input
+        type="text"
+        class="password-input"
+        id="passwordInput"
+        placeholder="Enter the password"
+        autocomplete="off"
+      />
+      <button class="unlock-button" onclick="checkPassword()">Unlock</button>
+      <div class="error-message" id="errorMessage">Oops, try again!</div>
+    </div>
+
+    <!-- Main Content (Hidden Initially) -->
+    <div class="container hidden" id="mainContent">
       <h1>Happy Valentine's Day, Duyen!</h1>
       <div class="subtitle">To My Em Yêu Dấu</div>
 
       <div class="message">
-        <p>placeholder message</p>
+        <p>
+          Looking back at the past few months, it makes me very happy that I met
+          you because you give a lot in my life to be excited about. I really
+          enjoy that we can talk about anything and every time we meet it feels
+          like the most natural thing in the world to be together.
+        </p>
+
+        <p>
+          I think about and miss you all the time, but for me it makes our
+          visits and time spent together on the phone and in person even
+          sweeter. Although we are apart for this Valentine's Day, I want you to
+          know that I am always close to you in spirit.
+        </p>
+
+        <p>
+          We started our journey together a bit unconventionally, but I'm glad
+          it's you I get to take this journey with. Thanks for taking this
+          chance with me and I'm really looking forward to what the future holds
+          for us!
+        </p>
       </div>
 
       <div class="signature">
@@ -213,6 +355,51 @@
     <div class="celebration" id="celebration"></div>
 
     <script>
+      // Password check function
+      function checkPassword() {
+        const input = document.getElementById("passwordInput");
+        const password = input.value.toLowerCase().trim();
+        const errorMsg = document.getElementById("errorMessage");
+
+        // Set your password here (case-insensitive)
+        const correctPassword = "emyeu"; // Change this to whatever you want!
+
+        if (password === correctPassword) {
+          // Correct password!
+          const passwordScreen = document.getElementById("passwordScreen");
+          const mainContent = document.getElementById("mainContent");
+
+          passwordScreen.classList.add("fade-out");
+          setTimeout(() => {
+            passwordScreen.classList.add("hidden");
+            mainContent.classList.remove("hidden");
+          }, 500);
+        } else {
+          // Wrong password
+          errorMsg.classList.add("show");
+          input.value = "";
+          input.style.borderColor = "#e63946";
+
+          setTimeout(() => {
+            errorMsg.classList.remove("show");
+            input.style.borderColor = "#f7a8e1";
+          }, 2000);
+        }
+      }
+
+      // Allow Enter key to submit
+      document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("passwordInput");
+        if (input) {
+          input.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+              checkPassword();
+            }
+          });
+          input.focus();
+        }
+      });
+
       // Create floating hearts in background
       function createFloatingHeart() {
         const heart = document.createElement("div");
@@ -284,11 +471,6 @@
             }, 16);
           }, i * 20);
         }
-
-        // Show sweet message
-        // setTimeout(() => {
-        //   alert("I love you more than all the stars in the sky! ✨💕");
-        // }, 1000);
       }
     </script>
   </body>
