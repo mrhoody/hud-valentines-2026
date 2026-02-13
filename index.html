@@ -259,25 +259,25 @@
       function celebrate() {
         const celebration = document.getElementById("celebration");
 
-        // Create burst of hearts
+        // Create burst of emoji
         for (let i = 0; i < 50; i++) {
           setTimeout(() => {
-            const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
-            heart.style.position = "fixed";
-            heart.style.fontSize = Math.random() * 30 + 20 + "px";
-            heart.style.left = "50%";
-            heart.style.top = "50%";
-            heart.style.transform = "translate(-50%, -50%)";
-            heart.style.pointerEvents = "none";
-            heart.style.zIndex = "1000";
+            const emoji = document.createElement("div");
+            emoji.innerHTML = "🎉💕✨";
+            emoji.style.position = "fixed";
+            emoji.style.fontSize = Math.random() * 30 + 20 + "px";
+            emoji.style.left = "50%";
+            emoji.style.top = "50%";
+            emoji.style.transform = "translate(-50%, -50%)";
+            emoji.style.pointerEvents = "none";
+            emoji.style.zIndex = "1000";
 
             const angle = (Math.PI * 2 * i) / 50;
             const velocity = Math.random() * 300 + 200;
             const vx = Math.cos(angle) * velocity;
             const vy = Math.sin(angle) * velocity;
 
-            celebration.appendChild(heart);
+            celebration.appendChild(emoji);
 
             let posX = window.innerWidth / 2;
             let posY = window.innerHeight / 2;
@@ -291,14 +291,14 @@
               currentVy += 500 * 0.016; // Gravity
               opacity -= 0.01;
 
-              heart.style.left = posX + "px";
-              heart.style.top = posY + "px";
-              heart.style.opacity = opacity;
-              heart.style.transform = "none";
+              emoji.style.left = posX + "px";
+              emoji.style.top = posY + "px";
+              emoji.style.opacity = opacity;
+              emoji.style.transform = "none";
 
               if (opacity <= 0 || posY > window.innerHeight) {
                 clearInterval(animation);
-                heart.remove();
+                emoji.remove();
               }
             }, 16);
           }, i * 20);
