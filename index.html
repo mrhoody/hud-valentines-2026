@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Valentine's Day ❤️</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Georgia", serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .container {
+        max-width: 800px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        animation: fadeIn 1s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        font-size: 3em;
+        color: #e63946;
+        margin-bottom: 20px;
+        animation: heartbeat 1.5s ease-in-out infinite;
+      }
+
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .subtitle {
+        font-size: 1.5em;
+        color: #555;
+        margin-bottom: 30px;
+        font-style: italic;
+      }
+
+      .message {
+        font-size: 1.2em;
+        line-height: 1.8;
+        color: #333;
+        margin: 30px 0;
+        text-align: left;
+      }
+
+      .message p {
+        margin-bottom: 20px;
+      }
+
+      .signature {
+        font-size: 1.3em;
+        color: #e63946;
+        font-weight: bold;
+        margin-top: 40px;
+        font-style: italic;
+      }
+
+      .heart {
+        color: #e63946;
+        font-size: 1.5em;
+        display: inline-block;
+        animation: pulse 1s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      /* Floating hearts background */
+      .floating-heart {
+        position: fixed;
+        font-size: 2em;
+        color: rgba(230, 57, 70, 0.6);
+        animation: float 15s infinite;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      .button-container {
+        margin-top: 40px;
+      }
+
+      .love-button {
+        background: linear-gradient(135deg, #e63946 0%, #d62828 100%);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.2em;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4);
+        font-family: "Georgia", serif;
+      }
+
+      .love-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.6);
+      }
+
+      .love-button:active {
+        transform: translateY(-1px);
+      }
+
+      .celebration {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 20px;
+          margin: 20px;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        .subtitle {
+          font-size: 1.2em;
+        }
+
+        .message {
+          font-size: 1em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Happy Valentine's Day! <span class="heart">❤️</span></h1>
+      <div class="subtitle">To the love of my life</div>
+
+      <div class="message">
+        <p>
+          Every moment with you feels like a beautiful dream I never want to
+          wake up from. You light up my world in ways I never thought possible,
+          and my heart skips a beat every time I see your smile.
+        </p>
+        <p>
+          You are my best friend, my partner in crime, and the person who makes
+          every day brighter just by being in it. Thank you for being you, for
+          your laughter, your kindness, and for choosing to share your life with
+          me.
+        </p>
+        <p>
+          On this Valentine's Day, I want you to know that my love for you grows
+          stronger with each passing day. You are my forever and always, my
+          today and all of my tomorrows.
+        </p>
+        <p>
+          I love you more than words could ever express, and I can't wait to
+          create a million more beautiful memories with you.
+        </p>
+      </div>
+
+      <div class="signature">
+        Forever yours,<br />
+        with all my love <span class="heart">❤️</span>
+      </div>
+
+      <div class="button-container">
+        <button class="love-button" onclick="celebrate()">
+          Click for a surprise! 💕
+        </button>
+      </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+      // Create floating hearts in background
+      function createFloatingHeart() {
+        const heart = document.createElement("div");
+        heart.className = "floating-heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = Math.random() * 10 + 10 + "s";
+        heart.style.animationDelay = Math.random() * 5 + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 20000);
+      }
+
+      // Create initial floating hearts
+      for (let i = 0; i < 15; i++) {
+        createFloatingHeart();
+      }
+
+      // Keep creating new hearts
+      setInterval(createFloatingHeart, 2000);
+
+      // Celebration function
+      function celebrate() {
+        const celebration = document.getElementById("celebration");
+
+        // Create burst of hearts
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.style.position = "fixed";
+            heart.style.fontSize = Math.random() * 30 + 20 + "px";
+            heart.style.left = "50%";
+            heart.style.top = "50%";
+            heart.style.transform = "translate(-50%, -50%)";
+            heart.style.pointerEvents = "none";
+            heart.style.zIndex = "1000";
+
+            const angle = (Math.PI * 2 * i) / 50;
+            const velocity = Math.random() * 300 + 200;
+            const vx = Math.cos(angle) * velocity;
+            const vy = Math.sin(angle) * velocity;
+
+            celebration.appendChild(heart);
+
+            let posX = window.innerWidth / 2;
+            let posY = window.innerHeight / 2;
+            let currentVx = vx;
+            let currentVy = vy;
+            let opacity = 1;
+
+            const animation = setInterval(() => {
+              posX += currentVx * 0.016;
+              posY += currentVy * 0.016;
+              currentVy += 500 * 0.016; // Gravity
+              opacity -= 0.01;
+
+              heart.style.left = posX + "px";
+              heart.style.top = posY + "px";
+              heart.style.opacity = opacity;
+              heart.style.transform = "none";
+
+              if (opacity <= 0 || posY > window.innerHeight) {
+                clearInterval(animation);
+                heart.remove();
+              }
+            }, 16);
+          }, i * 20);
+        }
+
+        // Show sweet message
+        setTimeout(() => {
+          alert("I love you more than all the stars in the sky! ✨💕");
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
